@@ -5,9 +5,9 @@
 
 echo "Installing...."
 
-ENV_HOME = "/home/pi/env/anti-theft"
+ENV_HOME="/home/pi/env/anti-theft"
 
-sudo apt-get python3-picamera
+sudo apt-get install python3-picamera
 
 # Activate env
 #source "${ENV_HOME}/activate"

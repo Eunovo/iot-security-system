@@ -3,8 +3,8 @@
 
 echo "Booting...."
 
-ENV_HOME = "/home/pi/env/anti-theft"
-APP_HOME = "/home/pi/src/anti-theft"
+ENV_HOME="/home/pi/env/anti-theft"
+APP_HOME="/home/pi/src/anti-theft"
 
 # Activate env
 source "${ENV_HOME}/activate"
