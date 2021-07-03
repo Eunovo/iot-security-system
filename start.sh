@@ -9,4 +9,4 @@ APP_HOME="/home/pi/src/anti-theft"
 # Activate env
 source "${ENV_HOME}/activate"
 cd $APP_HOME
-sudo python main.py 129.205.124.200
+sudo python main.py 192.168.43.190
