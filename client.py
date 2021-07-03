@@ -5,6 +5,7 @@ import time
 import picamera
 
 def connect(ip_address):
+    print("[+] Attempting to connect to {0}".format(ip_address))
     client_socket = socket.socket()
     client_socket.connect((ip_address, 8000))
 
