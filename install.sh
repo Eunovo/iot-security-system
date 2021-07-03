@@ -11,6 +11,3 @@ sudo apt-get python3-picamera
 
 # Activate env
 #source "${ENV_HOME}/activate"
-
-# Reboot the pi to restart the script 
-sudo reboot
