@@ -7,4 +7,4 @@ ENV_HOME = "/home/pi/env/anti-theft"
 
 # Activate env
 source "${ENV_HOME}/activate"
-python main.py
+python main.py 192.43.1
