@@ -10,4 +10,5 @@ ENV_HOME="/home/pi/env/anti-theft"
 sudo apt-get install python3-picamera
 
 # Activate env
-#source "${ENV_HOME}/activate"
+source "${ENV_HOME}/activate"
+python -m pip install websockets

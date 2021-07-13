@@ -1,18 +1,12 @@
+import asyncio
+import websockets
 import io
-import socket
 import struct
 import time
 import picamera
 
-def connect(ip_address):
-    print("[+] Attempting to connect to {0}".format(ip_address))
-    client_socket = socket.socket()
-    client_socket.connect((ip_address, 8000))
-
+async def serve(websocket, path):
     print("[+] Connection Established...")
-
-    # Make a file-like object out of the connection
-    connection = client_socket.makefile('wb')
 
     try:
         camera = picamera.PiCamera()
@@ -31,11 +25,11 @@ def connect(ip_address):
         for foo in camera.capture_continuous(stream, 'jpeg'):
             # Write the length of the capture to the stream and flush to
             # ensure it actually gets sent
-            connection.write(struct.pack('<L', stream.tell()))
-            connection.flush()
+            websocket.send(struct.pack('<L', stream.tell()))
+
             # Rewind the stream and send the image data over the wire
             stream.seek(0)
-            connection.write(stream.read())
+            websocket.send(stream.read())
             # If we've been capturing for more than 30 seconds, quit
             if time.time() - start > 60:
                 break
@@ -43,7 +37,14 @@ def connect(ip_address):
             stream.seek(0)
             stream.truncate()
         # Write a length of zero to the stream to signal we're done
-        connection.write(struct.pack('<L', 0))
+        websocket.send(struct.pack('<L', 0))
     finally:
-        connection.close()
-        client_socket.close()
+        print("[-] Connection closed...")
+        websocket.close()
+
+start_server = lambda port: websockets.serve(serve, "localhost", port)
+
+def start(port):
+    print("[+] Starting WebSocket Server")
+    asyncio.get_event_loop().run_until_complete(start_server(port))
+    asyncio.get_event_loop().run_forever()
