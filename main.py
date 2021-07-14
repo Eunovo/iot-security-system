@@ -16,7 +16,10 @@ PORT = 8765
 
 
 def connectToServer(url, motion_sensor, servo, camera):
-    servo_angle_diff = 45;
+    servo_angle_diff = 45
+
+    def capture():
+        camera.capture('Capture_' + str(time.time()))
 
     async def connect():
         while True:
@@ -26,7 +29,8 @@ def connectToServer(url, motion_sensor, servo, camera):
                     await websocket.send("LOG {}".format(PORT))
                     print('Device Logged')
 
-                    motion_sensor.when_motion = lambda: websocket.send("MOTION")
+                    motion_sensor.when_motion = lambda: websocket.send(
+                        "MOTION")
 
                     async for message in websocket:
                         # Handle incoming messages
@@ -36,11 +40,11 @@ def connectToServer(url, motion_sensor, servo, camera):
                             direction = tokens[1]
 
                             if (direction == 'LEFT'):
-                                servo.angle -= servo_angle_diff;
+                                servo.angle -= servo_angle_diff
                             elif (direction == 'RIGHT'):
-                                servo.angle += servo_angle_diff;
+                                servo.angle += servo_angle_diff
                         elif (message == "CAPTURE"):
-                            pass
+                            capture()
 
             except Exception as e:
                 print('Error: ' + str(e))
