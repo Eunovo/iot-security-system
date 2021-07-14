@@ -5,6 +5,8 @@ Version 0.1 of the IoT-based Security system
 import sys
 import livestream
 import asyncio
+import time
+import picamera
 from gpiozero import AngularServo, MotionSensor
 import websockets
 
@@ -13,7 +15,7 @@ MOTION_PIN = 4
 PORT = 8765
 
 
-def connectToServer(url, motion_sensor, servo):
+def connectToServer(url, motion_sensor, servo, camera):
     servo_angle_diff = 45;
 
     async def connect():
@@ -37,6 +39,8 @@ def connectToServer(url, motion_sensor, servo):
                                 servo.angle -= servo_angle_diff;
                             elif (direction == 'RIGHT'):
                                 servo.angle += servo_angle_diff;
+                        elif (message == "CAPTURE"):
+                            pass
 
             except Exception as e:
                 print('Error: ' + str(e))
@@ -50,10 +54,16 @@ def main():
 
     servo = AngularServo(SERVO_PIN, min_angle=-90, max_angle=90)
     motion_sensor = MotionSensor(MOTION_PIN)
+    camera = picamera.PiCamera()
+    camera.vflip = True
+    camera.resolution = (500, 480)
+    # Start a preview and let the camera warm up for 2 seconds
+    camera.start_preview()
+    time.sleep(2)
 
-    livestream.start(PORT)
+    livestream.start(PORT, camera)
     asyncio.get_event_loop().run_in_executor(
-        connectToServer(server_url, motion_sensor, servo))
+        connectToServer(server_url, motion_sensor, servo, camera))
 
 
 if __name__ == "__main__":
