@@ -5,8 +5,9 @@ import struct
 import time
 import picamera
 
+
 async def serve(websocket, path):
-    print("[+] Connection Established...")
+    print("[+] Connection Established with... " + websocket.remote_address)
 
     try:
         camera = picamera.PiCamera()
@@ -38,11 +39,15 @@ async def serve(websocket, path):
             stream.truncate()
         # Write a length of zero to the stream to signal we're done
         websocket.send(struct.pack('<L', 0))
+    except Exception as e:
+        print("[-] Error: " + str(e))
     finally:
         print("[-] Connection closed...")
         websocket.close()
 
-start_server = lambda port: websockets.serve(serve, "localhost", port)
+
+def start_server(port): return websockets.serve(serve, "localhost", port)
+
 
 def start(port):
     print("[+] Starting WebSocket Server")

@@ -5,21 +5,51 @@ Version 0.1 of the IoT-based Security system
 import sys
 import livestream
 import asyncio
+from gpiozero import AngularServo, MotionSensor
 import websockets
 
+SERVO_PIN = 17
+MOTION_PIN = 4
 PORT = 8765
 
-async def connectToServer(url):
-    async with websockets.connect(url) as websocket:
-        await websocket.send("LOG {}".format(PORT))
+
+def connectToServer(url, motion_sensor, servo):
+    async def connect():
+        while True:
+            try:
+                print('Attempting to connect with server')
+                async with websockets.connect(url) as websocket:
+                    await websocket.send("LOG {}".format(PORT))
+                    print('Device Logged')
+
+                    async for message in websocket:
+                        # Handle incoming messages
+                        print("Received: " + message)
+                        if (message.startswith('CAMERA')):
+                            tokens = message.split("_")
+                            direction = tokens[1]
+
+                            if (direction == 'LEFT'):
+                                pass
+                            elif (direction == 'RIGHT'):
+                                pass
+
+            except Exception as e:
+                print('Error: ' + str(e))
+
+    return connect
 
 
 def main():
     #ip_address = sys.argv[1]
     server_url = sys.argv[1]
 
-    asyncio.get_event_loop().run_until_complete(connectToServer(server_url))
+    servo = AngularServo(SERVO_PIN, min_angle=-90, max_angle=90)
+    motion_sensor = MotionSensor(MOTION_PIN)
+
     livestream.start(PORT)
+    asyncio.get_event_loop().run_in_executor(
+        connectToServer(server_url, motion_sensor, servo))
 
 
 if __name__ == "__main__":
