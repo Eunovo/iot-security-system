@@ -14,6 +14,8 @@ PORT = 8765
 
 
 def connectToServer(url, motion_sensor, servo):
+    servo_angle_diff = 30;
+
     async def connect():
         while True:
             try:
@@ -30,9 +32,9 @@ def connectToServer(url, motion_sensor, servo):
                             direction = tokens[1]
 
                             if (direction == 'LEFT'):
-                                pass
+                                servo.angle -= servo_angle_diff;
                             elif (direction == 'RIGHT'):
-                                pass
+                                servo.angle += servo_angle_diff;
 
             except Exception as e:
                 print('Error: ' + str(e))
