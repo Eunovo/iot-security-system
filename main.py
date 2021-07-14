@@ -14,7 +14,7 @@ PORT = 8765
 
 
 def connectToServer(url, motion_sensor, servo):
-    servo_angle_diff = 30;
+    servo_angle_diff = 45;
 
     async def connect():
         while True:
