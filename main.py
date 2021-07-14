@@ -29,8 +29,15 @@ def connectToServer(url, motion_sensor, servo, camera):
                     await websocket.send("LOG {}".format(PORT))
                     print('Device Logged')
 
-                    motion_sensor.when_motion = lambda: websocket.send(
-                        "MOTION")
+                    def onMotion(websocket):
+                        try:
+                            websocket.send("MOTION")
+                            capture()
+                        except Exception as e:
+                            print("Couldn't handle motion: " + str(e))
+
+                    motion_sensor.when_motion = onMotion
+                    motion_sensor.when_no_motion = onMotion
 
                     async for message in websocket:
                         # Handle incoming messages
