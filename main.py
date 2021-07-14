@@ -24,6 +24,8 @@ def connectToServer(url, motion_sensor, servo):
                     await websocket.send("LOG {}".format(PORT))
                     print('Device Logged')
 
+                    motion_sensor.when_motion = lambda: websocket.send("MOTION")
+
                     async for message in websocket:
                         # Handle incoming messages
                         print("Received: " + message)
