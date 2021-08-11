@@ -9,4 +9,5 @@ APP_HOME="/home/pi/iot-security-system"
 # Activate env
 source "${ENV_HOME}/activate"
 cd $APP_HOME
+sudo python --version
 sudo python main.py ws://anti-theft.herokuapp.com
