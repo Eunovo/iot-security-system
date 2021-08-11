@@ -11,5 +11,5 @@ sudo apt-get update
 sudo apt-get install python3-picamera python3-gpiozero
 
 # Activate env
-source "${ENV_HOME}/activate"
+source "${ENV_HOME}/bin/activate"
 python -m pip install websockets
