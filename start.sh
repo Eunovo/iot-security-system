@@ -4,7 +4,7 @@
 echo "Booting...."
 
 ENV_HOME="/home/pi/env/anti-theft"
-APP_HOME="/home/pi/src/anti-theft"
+APP_HOME="/home/pi/iot-security-system"
 
 # Activate env
 source "${ENV_HOME}/activate"
