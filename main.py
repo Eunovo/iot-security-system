@@ -71,6 +71,7 @@ def main():
     # Start a preview and let the camera warm up for 2 seconds
     camera.start_preview()
     time.sleep(2)
+    camera.stop_preview()
 
     livestream.start(PORT, camera)
     asyncio.get_event_loop().run_in_executor(
