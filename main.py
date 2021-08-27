@@ -16,7 +16,7 @@ MOTION_PIN = 4
 PORT = 8765
 
 
-def connectToServer(url, motion_sensor, servo, camera):
+def connectToServer(url, motion_sensor, servo, camera, logger):
     servo_angle_diff = 45
 
     def capture():
@@ -56,6 +56,7 @@ def connectToServer(url, motion_sensor, servo, camera):
 
             except Exception as e:
                 print('Error: ' + str(e))
+                logger.log(str(e))
 
     return connect
 
@@ -64,6 +65,7 @@ def main():
     #ip_address = sys.argv[1]
     server_url = sys.argv[1]
     log_url = sys.argv[2]
+    logger = logging.Logger(log_url)
 
     try:
         servo = AngularServo(SERVO_PIN, min_angle=-90, max_angle=90)
@@ -78,9 +80,9 @@ def main():
 
         livestream.start(PORT, camera)
         asyncio.get_event_loop().run_in_executor(
-            connectToServer(server_url, motion_sensor, servo, camera))
+            connectToServer(server_url, motion_sensor, servo, camera, logger))
     except Exception as e:
-        log(log_url, str(e))
+        logger.log(str(e))
 
 
 
