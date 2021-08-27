@@ -4,6 +4,7 @@ Version 0.1 of the IoT-based Security system
 """
 import sys
 import livestream
+import logging
 import asyncio
 import time
 import picamera
@@ -62,20 +63,25 @@ def connectToServer(url, motion_sensor, servo, camera):
 def main():
     #ip_address = sys.argv[1]
     server_url = sys.argv[1]
+    log_url = sys.argv[2]
 
-    servo = AngularServo(SERVO_PIN, min_angle=-90, max_angle=90)
-    motion_sensor = MotionSensor(MOTION_PIN)
-    camera = picamera.PiCamera()
-    # camera.vflip = True
-    camera.resolution = (500, 480)
-    # Start a preview and let the camera warm up for 2 seconds
-    camera.start_preview()
-    time.sleep(2)
-    camera.stop_preview()
+    try:
+        servo = AngularServo(SERVO_PIN, min_angle=-90, max_angle=90)
+        motion_sensor = MotionSensor(MOTION_PIN)
+        camera = picamera.PiCamera()
+        # camera.vflip = True
+        camera.resolution = (500, 480)
+        # Start a preview and let the camera warm up for 2 seconds
+        camera.start_preview()
+        time.sleep(2)
+        camera.stop_preview()
 
-    livestream.start(PORT, camera)
-    asyncio.get_event_loop().run_in_executor(
-        connectToServer(server_url, motion_sensor, servo, camera))
+        livestream.start(PORT, camera)
+        asyncio.get_event_loop().run_in_executor(
+            connectToServer(server_url, motion_sensor, servo, camera))
+    except Exception as e:
+        log(log_url, str(e))
+
 
 
 if __name__ == "__main__":
