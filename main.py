@@ -22,43 +22,40 @@ async def connectToServer(url, motion_sensor, servo, camera, logger):
     def capture():
         camera.capture('Capture_' + str(time.time()))
 
-    async def connect():
-        while True:
-            try:
-                print('Attempting to connect with server')
-                async with websockets.connect(url) as websocket:
-                    await websocket.send("LOG {}".format(PORT))
-                    print('Device Logged')
+    while True:
+        try:
+            print('Attempting to connect with server')
+            async with websockets.connect(url) as websocket:
+                await websocket.send("LOG {}".format(PORT))
+                print('Device Logged')
 
-                    def onMotion(websocket):
-                        try:
-                            websocket.send("MOTION")
-                            capture()
-                        except Exception as e:
-                            print("Couldn't handle motion: " + str(e))
+                def onMotion(websocket):
+                    try:
+                        websocket.send("MOTION")
+                        capture()
+                    except Exception as e:
+                        print("Couldn't handle motion: " + str(e))
 
-                    motion_sensor.when_motion = onMotion
-                    motion_sensor.when_no_motion = onMotion
+                motion_sensor.when_motion = onMotion
+                motion_sensor.when_no_motion = onMotion
 
-                    async for message in websocket:
-                        # Handle incoming messages
-                        print("Received: " + message)
-                        if (message.startswith('CAMERA')):
-                            tokens = message.split("_")
-                            direction = tokens[1]
+                async for message in websocket:
+                    # Handle incoming messages
+                    print("Received: " + message)
+                    if (message.startswith('CAMERA')):
+                        tokens = message.split("_")
+                        direction = tokens[1]
 
-                            if (direction == 'LEFT'):
-                                servo.angle -= servo_angle_diff
-                            elif (direction == 'RIGHT'):
-                                servo.angle += servo_angle_diff
-                        elif (message == "CAPTURE"):
-                            capture()
+                        if (direction == 'LEFT'):
+                            servo.angle -= servo_angle_diff
+                        elif (direction == 'RIGHT'):
+                            servo.angle += servo_angle_diff
+                    elif (message == "CAPTURE"):
+                        capture()
 
-            except Exception as e:
-                print('Error: ' + str(e))
-                logger.log(str(e))
-
-    return connect
+        except Exception as e:
+            print('Error: ' + str(e))
+            logger.log(str(e))
 
 
 def main():
@@ -85,7 +82,6 @@ def main():
         asyncio.get_event_loop().run_forever()
     except Exception as e:
         logger.log(str(e))
-
 
 
 if __name__ == "__main__":
