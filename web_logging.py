@@ -7,6 +7,6 @@ class Logger:
 
     def log(self, message):
         try:
-            requests.get(self.url, params={'nessage': message})
+            requests.get(self.url, params={'message': message})
         except:
             print('Could not log message')
