@@ -4,7 +4,7 @@ Version 0.1 of the IoT-based Security system
 """
 import sys
 import livestream
-import logging
+import web_logging
 import asyncio
 import time
 import picamera
@@ -65,7 +65,7 @@ def main():
     #ip_address = sys.argv[1]
     server_url = sys.argv[1]
     log_url = sys.argv[2]
-    logger = logging.Logger(log_url)
+    logger = web_logging.Logger(log_url)
 
     try:
         servo = AngularServo(SERVO_PIN, min_angle=-90, max_angle=90)
