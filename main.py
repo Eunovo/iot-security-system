@@ -79,9 +79,10 @@ def main():
         time.sleep(2)
         camera.stop_preview()
 
-        livestream.start(PORT, camera)
-        asyncio.get_event_loop().run_in_executor(
+        asyncio.ensure_future(
             connectToServer(server_url, motion_sensor, servo, camera, logger))
+        asyncio.ensure_future(livestream.start(PORT, camera))
+        asyncio.get_event_loop().run_forever()
     except Exception as e:
         logger.log(str(e))
 

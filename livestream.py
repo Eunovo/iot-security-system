@@ -1,9 +1,7 @@
-import asyncio
 import websockets
 import io
 import struct
 import time
-# import picamera
 
 
 def serve(camera):
@@ -49,10 +47,7 @@ def serve(camera):
     return handleSocket
 
 
-async def start_server(port, camera): return websockets.serve(serve(camera), "localhost", port)
-
-
-def start(port, camera):
+async def start(port, camera):
     print("[+] Starting WebSocket Server")
-    asyncio.get_event_loop().run_until_complete(start_server(port, camera))
-    asyncio.get_event_loop().run_forever()
+    websockets.serve(serve(camera), "localhost", port)
+    
