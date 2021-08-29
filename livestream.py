@@ -2,10 +2,14 @@ import websockets
 import io
 import struct
 import time
+import logging
 
+logger = logging.getLogger("websockets.server")
+logger.setLevel(logging.ERROR)
+logger.addHandler(logging.StreamHandler())
 
 def serve(camera):
-    def handleSocket(websocket, path):
+    async def handleSocket(websocket, path):
         print("[+] Connection Established with... " + websocket.remote_address)
 
         try:
@@ -25,11 +29,11 @@ def serve(camera):
             for foo in camera.capture_continuous(stream, 'jpeg'):
                 # Write the length of the capture to the stream and flush to
                 # ensure it actually gets sent
-                websocket.send(struct.pack('<L', stream.tell()))
+                await websocket.send(struct.pack('<L', stream.tell()))
 
                 # Rewind the stream and send the image data over the wire
                 stream.seek(0)
-                websocket.send(stream.read())
+                await websocket.send(stream.read())
                 # If we've been capturing for more than 30 seconds, quit
                 if time.time() - start > 60:
                     break
@@ -49,5 +53,5 @@ def serve(camera):
 
 async def start(port, camera):
     print("[+] Starting WebSocket Server")
-    websockets.serve(serve(camera), "localhost", port)
+    await websockets.serve(serve(camera), "localhost", port)
     
