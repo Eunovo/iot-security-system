@@ -6,7 +6,7 @@ import time
 # import picamera
 
 
-async def serve(camera):
+def serve(camera):
     def handleSocket(websocket, path):
         print("[+] Connection Established with... " + websocket.remote_address)
 
@@ -49,7 +49,7 @@ async def serve(camera):
     return handleSocket
 
 
-def start_server(port, camera): return websockets.serve(serve(camera), "localhost", port)
+async def start_server(port, camera): return websockets.serve(serve(camera), "localhost", port)
 
 
 def start(port, camera):

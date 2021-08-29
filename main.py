@@ -16,7 +16,7 @@ MOTION_PIN = 4
 PORT = 8765
 
 
-def connectToServer(url, motion_sensor, servo, camera, logger):
+async def connectToServer(url, motion_sensor, servo, camera, logger):
     servo_angle_diff = 45
 
     def capture():
