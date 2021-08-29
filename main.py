@@ -68,6 +68,7 @@ def main():
     logger = web_logging.Logger(log_url)
 
     try:
+        logger.log("[+] Device ON")
         servo = AngularServo(SERVO_PIN, min_angle=-90, max_angle=90)
         motion_sensor = MotionSensor(MOTION_PIN)
         camera = picamera.PiCamera()
