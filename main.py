@@ -13,7 +13,7 @@ import websockets
 
 SERVO_PIN = 17
 MOTION_PIN = 4
-PORT = 8765
+PORT = 8080
 
 
 async def connectToServer(url, motion_sensor, servo, camera, logger):
