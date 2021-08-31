@@ -38,7 +38,7 @@ async def connectToServer(url, motion_sensor, servo, camera, logger):
 
                 motion_sensor.when_motion = onMotion
                 motion_sensor.when_no_motion = onMotion
-
+                logger.log("Motion sensor is configured")
                 async for message in websocket:
                     # Handle incoming messages
                     print("Received: " + message)
@@ -78,7 +78,7 @@ def main():
 
         asyncio.ensure_future(
             connectToServer(server_url, motion_sensor, servo, camera, logger))
-        asyncio.ensure_future(livestream.start(PORT, camera))
+        asyncio.ensure_future(livestream.start(server_url, camera, logger))
         asyncio.get_event_loop().run_forever()
     except Exception as e:
         logger.log(str(e))
