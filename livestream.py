@@ -34,5 +34,5 @@ async def startStream(url, camera, web_logger):
 
 async def start(server_url, camera, web_logger):
     web_logger.log("[pi] Starting Stream")
-    startStream(server_url, camera, web_logger)
+    await startStream(server_url, camera, web_logger)
     # await websockets.serve(serve(camera), "localhost", port)
