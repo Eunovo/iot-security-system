@@ -15,6 +15,7 @@ async def startStream(url, camera, web_logger):
                 for foo in camera.capture_continuous(stream, 'jpeg'):
                     # Write the length of the capture to the stream and flush to
                     # ensure it actually gets sent
+                    print(stream.tell())
                     await websocket.send(struct.pack('<L', stream.tell()))
 
                     # Rewind the stream and send the image data over the wire
