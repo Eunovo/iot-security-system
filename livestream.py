@@ -20,7 +20,9 @@ async def startStream(url, camera, web_logger):
 
                     # Rewind the stream and send the image data over the wire
                     stream.seek(0)
-                    await websocket.send(stream.read())
+                    data = stream.read()
+                    print(data)
+                    await websocket.send(data)
                     # If we've been capturing for more than 30 seconds, quit
                     if time.time() - start > 60:
                         break
