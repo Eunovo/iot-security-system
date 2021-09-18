@@ -8,6 +8,7 @@ async def startStream(url, camera, web_logger):
         try:
             async with websockets.connect(url) as websocket:
                 await websocket.send('STREAM')
+                print("'STREAM' sent")
 
                 stream = io.BytesIO()
                 for foo in camera.capture_continuous(stream, 'jpeg'):
