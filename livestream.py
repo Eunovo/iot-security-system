@@ -1,5 +1,6 @@
 import websockets
 import io
+import struct
 
 
 async def startStream(url, camera, web_logger):
@@ -12,7 +13,7 @@ async def startStream(url, camera, web_logger):
                 for foo in camera.capture_continuous(stream, 'jpeg'):
                     # Write the length of the capture to the stream and flush to
                     # ensure it actually gets sent
-                    print(stream.tell())
+                    print("Sent: ", stream.tell(), " bytes")
 
                     # Rewind the stream and send the image data over the wire
                     stream.seek(0)
@@ -22,6 +23,7 @@ async def startStream(url, camera, web_logger):
                     # Reset the stream for the next capture
                     stream.seek(0)
                     stream.truncate()
+
                 # Write a length of zero to the stream to signal we're done
                 websocket.send(struct.pack('<L', 0))
         except Exception as e:
