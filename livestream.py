@@ -17,7 +17,7 @@ async def startStream(url, camera, web_logger):
                     # Rewind the stream and send the image data over the wire
                     stream.seek(0)
                     data = stream.read()
-                    print(data)
+                    # print(data)
                     await websocket.send(data)
                     # Reset the stream for the next capture
                     stream.seek(0)
@@ -25,7 +25,9 @@ async def startStream(url, camera, web_logger):
                 # Write a length of zero to the stream to signal we're done
                 websocket.send(struct.pack('<L', 0))
         except Exception as e:
-            web_logger.log('[pi] Error occured: '+str(e))
+            error_msg = '[pi] Error occured: '+str(e)
+            print(error_msg)
+            web_logger.log(error_msg)
 
 
 async def start(server_url, camera, web_logger):
