@@ -29,7 +29,6 @@ async def startStream(url, camera, web_logger):
                 websocket.send(struct.pack('<L', 0))
         except Exception as e:
             error_msg = '[pi] Error occured: '+str(e)
-            print(error_msg)
             web_logger.log(error_msg)
 
 
