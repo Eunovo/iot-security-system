@@ -41,7 +41,7 @@ async def start(server_url, camera, web_logger):
     def reader():
         readImageStream(camera, web_logger)
     def streamer():
-        asyncio.run_forever(startStream(server_url, web_logger))
+        asyncio.run(startStream(server_url, web_logger))
 
     threading.Thread(target=reader, daemon=True).start()
     threading.Thread(target=streamer, daemon=True).start()
