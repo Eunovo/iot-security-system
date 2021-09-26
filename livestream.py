@@ -4,6 +4,7 @@ import asyncio
 
 data_queue = asyncio.Queue()
 
+
 async def readImageStream(camera, web_logger):
     web_logger.log('Reading stream')
     stream = io.BytesIO()
@@ -25,7 +26,7 @@ async def startStream(url, web_logger):
                 print("'STREAM' sent")
 
                 while True:
-                    data = data_queue.get()
+                    data = await data_queue.get()
                     await websocket.send(data)
                     print("Sent: ", len(data), " bytes")
         except Exception as e:
@@ -35,5 +36,5 @@ async def startStream(url, web_logger):
 
 async def start(server_url, camera, web_logger):
     web_logger.log("[pi] Starting Stream...")
-    readImageStream(camera, web_logger)
-    startStream(server_url, web_logger)
+    await asyncio.gather(readImageStream(camera, web_logger),
+                         startStream(server_url, web_logger))
