@@ -12,7 +12,9 @@ async def readImageStream(camera, web_logger):
         # Rewind the stream and send the image data over the wire
         stream.seek(0)
         data = stream.read()
+        print('i have '+len(data))
         data_queue.put_nowait(data)
+        print('put '+len(data))
         # Reset the stream for the next capture
         stream.seek(0)
         stream.truncate()
