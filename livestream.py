@@ -1,5 +1,6 @@
 import websockets
 import io
+import asyncio
 import queue
 
 data_queue = queue.Queue()
@@ -37,4 +38,4 @@ async def startStream(url, web_logger):
 async def start(server_url, camera, web_logger):
     web_logger.log("[pi] Starting Stream...")
     readImageStream(camera, web_logger)
-    await startStream(server_url, web_logger)
+    startStream(server_url, web_logger)
