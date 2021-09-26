@@ -1,11 +1,11 @@
 import websockets
 import io
-import asyncio
+import threading, queue
 
-data_queue = asyncio.Queue()
+data_queue = queue.Queue()
 
 
-async def readImageStream(camera, web_logger):
+def readImageStream(camera, web_logger):
     web_logger.log('Reading stream')
     stream = io.BytesIO()
     for foo in camera.capture_continuous(stream, 'jpeg'):
@@ -20,16 +20,16 @@ async def readImageStream(camera, web_logger):
         stream.truncate()
 
 
-async def startStream(url, web_logger):
+def startStream(url, web_logger):
     while True:
         try:
-            async with websockets.connect(url) as websocket:
-                await websocket.send('STREAM')
+            with websockets.connect(url) as websocket:
+                websocket.send('STREAM')
                 print("'STREAM' sent")
 
                 while True:
-                    data = await data_queue.get()
-                    await websocket.send(data)
+                    data = data_queue.get()
+                    websocket.send(data)
                     print("Sent: ", str(len(data)), " bytes")
         except Exception as e:
             error_msg = '[pi] Error occured: '+str(e)
@@ -38,5 +38,10 @@ async def startStream(url, web_logger):
 
 async def start(server_url, camera, web_logger):
     web_logger.log("[pi] Starting Stream...")
-    await asyncio.gather(readImageStream(camera, web_logger),
-                         startStream(server_url, web_logger))
+    def reader():
+        readImageStream(camera, web_logger)
+    def streamer():
+        startStream(server_url, web_logger)
+
+    threading.Thread(target=reader, daemon=True).start()
+    threading.Thread(target=streamer, daemon=True).start()
