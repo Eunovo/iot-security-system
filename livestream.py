@@ -1,10 +1,8 @@
 import websockets
 import io
 import asyncio
-import queue
 
-data_queue = queue.Queue()
-
+data_queue = asyncio.Queue()
 
 async def readImageStream(camera, web_logger):
     web_logger.log('Reading stream')
