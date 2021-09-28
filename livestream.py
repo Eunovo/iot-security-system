@@ -30,7 +30,7 @@ async def startStream(url, web_logger):
                 while True:
                     data = data_queue.get()
                     await websocket.send(data)
-                    print("Sent: ", str(len(data)), " bytes")
+                    # print("Sent: ", str(len(data)), " bytes")
         except Exception as e:
             error_msg = '[pi] Error occured: '+str(e)
             web_logger.log(error_msg)
