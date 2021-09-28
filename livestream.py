@@ -40,7 +40,7 @@ async def start(server_url, camera, web_logger):
     n_streamer_threads = 1
 
     web_logger.log("[pi] Starting Stream...")
-    web_logger.log("Number of streamer thread: "+str(n_streamer_threads))
+    web_logger.log("Number of streamer threads: "+str(n_streamer_threads))
 
     def reader():
         readImageStream(camera, web_logger)
