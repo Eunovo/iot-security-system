@@ -43,5 +43,5 @@ async def start(server_url, camera, web_logger):
 
     threading.Thread(target=reader, daemon=True).start()
     threading.Thread(target=streamer, daemon=True).start()
-    threading.Thread(target=streamer, daemon=True).start()
-    threading.Thread(target=streamer, daemon=True).start()
+    # threading.Thread(target=streamer, daemon=True).start()
+    # threading.Thread(target=streamer, daemon=True).start()
