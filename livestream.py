@@ -1,6 +1,8 @@
 import websockets
-import io, asyncio
-import threading, queue
+import io
+import asyncio
+import threading
+import queue
 
 data_queue = queue.Queue()
 
@@ -35,13 +37,17 @@ async def startStream(url, web_logger):
 
 
 async def start(server_url, camera, web_logger):
+    n_streamer_threads = 1
+
     web_logger.log("[pi] Starting Stream...")
+    web_logger.log("Number of streamer thread: "+str(n_streamer_threads))
+
     def reader():
         readImageStream(camera, web_logger)
+
     def streamer():
         asyncio.run(startStream(server_url, web_logger))
 
     threading.Thread(target=reader, daemon=True).start()
-    threading.Thread(target=streamer, daemon=True).start()
-    # threading.Thread(target=streamer, daemon=True).start()
-    # threading.Thread(target=streamer, daemon=True).start()
+    for i in range(n_streamer_threads):
+        threading.Thread(target=streamer, daemon=True).start()
