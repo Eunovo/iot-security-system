@@ -11,13 +11,17 @@ def readImageStream(camera, web_logger):
     web_logger.log('Reading stream')
     stream = io.BytesIO()
     for foo in camera.capture_continuous(stream, 'jpeg', use_video_port=True):
-        # Rewind the stream and send the image data over the wire
-        stream.seek(0)
-        data = stream.read()
-        data_queue.put_nowait(data)
-        # Reset the stream for the next capture
-        stream.seek(0)
-        stream.truncate()
+        try:
+            # Rewind the stream and send the image data over the wire
+            stream.seek(0)
+            data = stream.read()
+            data_queue.put_nowait(data)
+            # Reset the stream for the next capture
+            stream.seek(0)
+            stream.truncate()
+        except Exception as e:
+            error_msg = '[pi] Error occured: '+str(e)
+            web_logger.log(error_msg)
 
 
 async def startStream(url, web_logger):
