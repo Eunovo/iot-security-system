@@ -76,6 +76,7 @@ def listenForMotion():
 
 def capture():
     camera.capture(CAPTURE_DIR + 'Capture_' + str(time.time()) + '.jpg')
+    print('Captured an image')
 
 
 def main():
