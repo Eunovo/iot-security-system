@@ -3,6 +3,7 @@ import io
 import asyncio
 import threading
 import queue
+import time
 
 data_queue = queue.Queue()
 
@@ -34,6 +35,7 @@ async def startStream(url, web_logger):
                 while True:
                     data = data_queue.get()
                     await websocket.send(data)
+                    time.sleep(2) # slow down the data
                     # print("Sent: ", str(len(data)), " bytes")
         except Exception as e:
             error_msg = '[pi] Error occured: '+str(e)
