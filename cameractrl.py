@@ -1,6 +1,6 @@
 from genericpath import isfile
 from os import path
-from os import listdir, isfile, listdir
+from os import listdir, listdir
 from os import path, makedirs
 import time
 import json
@@ -20,7 +20,7 @@ class CameraCtrl:
 
     def listImages(self):
         files = listdir(self.captureDir)
-        files = [f for f in files if isfile(path.join(self.captureDir, f))]
+        files = [f for f in files if path.isfile(path.join(self.captureDir, f))]
         return json.dumps(files)
 
     def readImage(self, filename):
