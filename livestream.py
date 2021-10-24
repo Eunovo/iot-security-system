@@ -11,7 +11,7 @@ data_queue = queue.Queue()
 def readImageStream(camera, web_logger):
     web_logger.log('Reading stream')
     stream = io.BytesIO()
-    for foo in camera.capture_continuous(stream, 'png', use_video_port=True):
+    for foo in camera.capture_continuous(stream, 'bmp', use_video_port=True):
         try:
             # Rewind the stream and send the image data over the wire
             stream.seek(0)
