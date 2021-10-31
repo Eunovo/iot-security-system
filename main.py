@@ -76,6 +76,7 @@ def listenForMotion(logger):
 
     def onMotion():
         try:
+            print("MOTION")
             message_queue.put_nowait("MOTION")
             cameraCtrl.capture()
         except Exception as e:
