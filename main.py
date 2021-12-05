@@ -102,10 +102,13 @@ def main():
         leftMic.when_activated = logSound('left with intensity: '+ str(leftMic.value))
         rightMic.when_activated = logSound('right with intensity: '+ str(rightMic.value))
 
-        servoCtrl.left()
-        time.sleep(2)
-        servoCtrl.right()
-        time.sleep(2)
+        while True:
+            print(leftMic.value, rightMic.value)
+
+        # servoCtrl.left()
+        # time.sleep(2)
+        # servoCtrl.right()
+        # time.sleep(2)
 
         # camera.vflip = True
         # Start a preview and let the camera warm up for 2 seconds
