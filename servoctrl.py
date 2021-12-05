@@ -7,14 +7,13 @@ class ServoCtrl:
         self.current_angle = initial_angle
 
     def left(self):
-        self.rotate(-1)
+        self.rotate(0.1)
 
     def right(self):
-        self.rotate(1)
+        self.rotate(0.2)
 
     def rotate(self, cycle):
-        actual_cycle = 0 + (((cycle - (-1)) / (1 - (-1))) * (0.2 - 0))
-        print(cycle, actual_cycle)
-        self.value = actual_cycle
+        # actual_cycle = 0.1 + (((cycle - (-1)) / (1 - (-1))) * (0.2 - 0.1))
+        self.value = cycle
         time.sleep(0.3)
         self.value = 0
