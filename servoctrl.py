@@ -14,6 +14,6 @@ class ServoCtrl:
 
     def rotate(self, cycle):
         # actual_cycle = 0.1 + (((cycle - (-1)) / (1 - (-1))) * (0.2 - 0.1))
-        self.value = cycle
+        self.servo.value = cycle
         time.sleep(0.3)
-        self.value = 0
+        self.servo.value = 0
