@@ -116,12 +116,12 @@ def main():
         threading.Thread(target=listenForMotion, args=(
                          logger,), daemon=True).start()
 
-        asyncio.ensure_future(
-            listenToServer(server_url, logger))
-        asyncio.ensure_future(
-            sendFromQueue(server_url, logger))
-        asyncio.ensure_future(livestream.start(server_url, camera, logger))
-        asyncio.get_event_loop().run_forever()
+        # asyncio.ensure_future(
+        #     listenToServer(server_url, logger))
+        # asyncio.ensure_future(
+        #     sendFromQueue(server_url, logger))
+        # asyncio.ensure_future(livestream.start(server_url, camera, logger))
+        # asyncio.get_event_loop().run_forever()
     except Exception as e:
         logger.log(str(e))
 
