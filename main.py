@@ -23,7 +23,7 @@ CAPTURE_DIR = "/home/pi/captures/"
 
 camera = picamera.PiCamera(resolution=(480, 360))
 cameraCtrl = cameractrl.CameraCtrl(camera, CAPTURE_DIR)
-servo = AngularServo(SERVO_PIN, min_angle=-90, max_angle=90)
+# servo = AngularServo(SERVO_PIN, min_angle=-90, max_angle=90)
 servoCtrl = servoctrl.ServoCtrl(servo, 45)
 leftMic = DigitalInputDevice(MIC_LEFT_PIN)
 rightMic = DigitalInputDevice(MIC_RIGHT_PIN)
@@ -45,10 +45,10 @@ async def listenToServer(url, logger):
                         if (tokens[0] == 'CAMERA'):
                             direction = tokens[1]
 
-                            if (direction == 'LEFT'):
-                                servoCtrl.left()
-                            elif (direction == 'RIGHT'):
-                                servoCtrl.right()
+                            # if (direction == 'LEFT'):
+                            #     servoCtrl.left()
+                            # elif (direction == 'RIGHT'):
+                            #     servoCtrl.right()
 
                         elif (tokens[0] == "CAPTURE"):
                             cameraCtrl.capture()
@@ -102,10 +102,10 @@ def main():
         leftMic.when_activated = logSound('left with intensity: '+ str(leftMic.value))
         rightMic.when_activated = logSound('right with intensity: '+ str(rightMic.value))
 
-        servoCtrl.left()
-        time.sleep(2)
-        servoCtrl.right()
-        time.sleep(2)
+        # servoCtrl.left()
+        # time.sleep(2)
+        # servoCtrl.right()
+        # time.sleep(2)
 
         # camera.vflip = True
         # Start a preview and let the camera warm up for 2 seconds

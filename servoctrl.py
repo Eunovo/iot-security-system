@@ -4,9 +4,7 @@ class ServoCtrl:
         self.angle_diff = angle_diff
 
     def left(self):
-        # self.servo.angle -= self.angle_diff
-        pass
+        self.servo.angle -= self.angle_diff
 
     def right(self):
-        # self.servo.angle += self.angle_diff
-        pass
+        self.servo.angle += self.angle_diff
