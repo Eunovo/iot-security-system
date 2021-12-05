@@ -102,8 +102,8 @@ def main():
         leftMic.when_activated = logSound('left with intensity: '+ str(leftMic.value))
         rightMic.when_activated = logSound('right with intensity: '+ str(rightMic.value))
 
-        while True:
-            print(leftMic.value, rightMic.value)
+        # while True:
+        #     print(leftMic.value, rightMic.value)
 
         # servoCtrl.left()
         # time.sleep(2)
