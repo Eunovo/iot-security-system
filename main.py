@@ -112,16 +112,16 @@ def main():
         camera.start_preview()
         time.sleep(2)
         camera.stop_preview()
-        listenForMotion(logger)
-        # threading.Thread(target=listenForMotion, args=(
-        #                  logger,), daemon=True).start()
+        # listenForMotion(logger)
+        threading.Thread(target=listenForMotion, args=(
+                         logger,), daemon=True).start()
 
-        # asyncio.ensure_future(
-        #     listenToServer(server_url, logger))
-        # asyncio.ensure_future(
-        #     sendFromQueue(server_url, logger))
-        # asyncio.ensure_future(livestream.start(server_url, camera, logger))
-        # asyncio.get_event_loop().run_forever()
+        asyncio.ensure_future(
+            listenToServer(server_url, logger))
+        asyncio.ensure_future(
+            sendFromQueue(server_url, logger))
+        asyncio.ensure_future(livestream.start(server_url, camera, logger))
+        asyncio.get_event_loop().run_forever()
     except Exception as e:
         logger.log(str(e))
 
