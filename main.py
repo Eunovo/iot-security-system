@@ -98,9 +98,9 @@ def main():
 
     try:
         logger.log("[+] Device ON")
-        logSound = lambda x: lambda: logger.log("[+] Sound to the "+x)
-        leftMic.when_activated = logSound('left with intensity: '+leftMic.value)
-        rightMic.when_activated = logSound('right with intensity: '+rightMic.value)
+        logSound = lambda x: lambda: logger.log("[+] Sound to the " + str(x))
+        leftMic.when_activated = logSound('left with intensity: '+ str(leftMic.value))
+        rightMic.when_activated = logSound('right with intensity: '+ str(rightMic.value))
 
         servoCtrl.left()
         time.sleep(2)
