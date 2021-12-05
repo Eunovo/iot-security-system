@@ -23,8 +23,8 @@ CAPTURE_DIR = "/home/pi/captures/"
 
 camera = picamera.PiCamera(resolution=(480, 360))
 cameraCtrl = cameractrl.CameraCtrl(camera, CAPTURE_DIR)
-# servo = AngularServo(SERVO_PIN, min_angle=-90, max_angle=90)
-# servoCtrl = servoctrl.ServoCtrl(servo, 45)
+servo = AngularServo(SERVO_PIN, min_angle=-90, max_angle=90)
+servoCtrl = servoctrl.ServoCtrl(servo, 45)
 leftMic = DigitalInputDevice(MIC_LEFT_PIN)
 rightMic = DigitalInputDevice(MIC_RIGHT_PIN)
 message_queue = asyncio.Queue()
@@ -98,17 +98,17 @@ def main():
 
     try:
         logger.log("[+] Device ON")
-        logSound = lambda x: lambda: logger.log("[+] Sound to the " + str(x))
-        leftMic.when_activated = logSound('left with intensity: '+ str(leftMic.value))
-        rightMic.when_activated = logSound('right with intensity: '+ str(rightMic.value))
 
-        # while True:
-        #     print(leftMic.value, rightMic.value)
+        def control_servo(direction):
+            print(direction)
+            {
+                'left': servoCtrl.left,
+                'right': servoCtrl.right
+            }[direction]()
+            time.sleep(5)
 
-        # servoCtrl.left()
-        # time.sleep(2)
-        # servoCtrl.right()
-        # time.sleep(2)
+        leftMic.when_activated = lambda: control_servo('left')
+        rightMic.when_activated = lambda: control_servo('right')
 
         # camera.vflip = True
         # Start a preview and let the camera warm up for 2 seconds
