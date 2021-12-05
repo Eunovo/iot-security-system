@@ -23,8 +23,8 @@ CAPTURE_DIR = "/home/pi/captures/"
 
 camera = picamera.PiCamera(resolution=(480, 360))
 cameraCtrl = cameractrl.CameraCtrl(camera, CAPTURE_DIR)
-servo = AngularServo(SERVO_PIN, min_angle=-90, max_angle=90)
-servoCtrl = servoctrl.ServoCtrl(servo, 45)
+# servo = AngularServo(SERVO_PIN, min_angle=-90, max_angle=90)
+# servoCtrl = servoctrl.ServoCtrl(servo, 45)
 leftMic = DigitalInputDevice(MIC_LEFT_PIN)
 rightMic = DigitalInputDevice(MIC_RIGHT_PIN)
 message_queue = asyncio.Queue()
@@ -45,10 +45,10 @@ async def listenToServer(url, logger):
                         if (tokens[0] == 'CAMERA'):
                             direction = tokens[1]
 
-                            if (direction == 'LEFT'):
-                                servoCtrl.left()
-                            elif (direction == 'RIGHT'):
-                                servoCtrl.right()
+                            # if (direction == 'LEFT'):
+                                # servoCtrl.left()
+                            # elif (direction == 'RIGHT'):
+                                # servoCtrl.right()
 
                         elif (tokens[0] == "CAPTURE"):
                             cameraCtrl.capture()
