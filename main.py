@@ -113,8 +113,10 @@ def main():
         time.sleep(2)
         camera.stop_preview()
         # listenForMotion(logger)
-        threading.Thread(target=listenForMotion, args=(
-                         logger,), daemon=True).start()
+        motionThread = threading.Thread(target=listenForMotion, args=(
+                         logger,), daemon=True)
+        motionThread.start()
+        print(motionThread.is_alive())
 
         # asyncio.ensure_future(
         #     listenToServer(server_url, logger))
