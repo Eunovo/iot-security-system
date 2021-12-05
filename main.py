@@ -114,7 +114,7 @@ def main():
         camera.stop_preview()
         # listenForMotion(logger)
         motionThread = threading.Thread(target=listenForMotion, args=(
-                         logger,), daemon=True)
+                         logger,), daemon=False)
         motionThread.start()
         print(motionThread.is_alive())
 
