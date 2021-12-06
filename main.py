@@ -99,7 +99,10 @@ def main():
         logger.log("[+] Device ON")
 
         def control_servo(direction):
-            print(direction)
+            print(direction, {
+                'left': servoCtrl.left,
+                'right': servoCtrl.right
+            }.get(direction))
             {
                 'left': servoCtrl.left,
                 'right': servoCtrl.right
