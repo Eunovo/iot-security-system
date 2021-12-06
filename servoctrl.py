@@ -5,13 +5,14 @@ from queue import Empty, Queue
 
 class ServoCtrl(Thread):
     def __init__(self, servo):
+        super().__init__()
         self.queue = Queue()
         self.servo = servo
         self.save_path = "/home/pi/servo.dat"
         self.current_position = ''
         with open(self.save_path, 'r') as file:
             self.current_position = file.readline()
-        print(self.current_position)
+        print('Current Position: ', self.current_position)
 
     def run(self):
         while True:
