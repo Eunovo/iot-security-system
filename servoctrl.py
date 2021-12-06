@@ -39,7 +39,7 @@ class ServoCtrl(Thread):
                 self.set_current_position(new_position)
                 
                 # pause
-                time.sleep(10)
+                time.sleep(5)
             except Empty:
                 pass
 
