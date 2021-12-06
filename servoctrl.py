@@ -35,7 +35,7 @@ class ServoCtrl(Thread):
                 self.rotate({
                     'left': 0.1, 'right': 0.2
                 }.get(new_position))
-                print('Current Position: ', self.new_position)
+                print('Current Position: ', new_position)
                 self.set_current_position(new_position)
                 
                 # pause
