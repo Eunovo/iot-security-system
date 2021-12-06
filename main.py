@@ -99,7 +99,6 @@ def main():
         logger.log("[+] Device ON")
 
         def control_servo(direction):
-            print(direction)
             {
                 'left': servoCtrl.left,
                 'right': servoCtrl.right
@@ -108,7 +107,7 @@ def main():
         leftMic.when_activated = lambda: control_servo('left')
         rightMic.when_activated = lambda: control_servo('right')
         servoCtrl.start()
-        
+
         # camera.vflip = True
         # Start a preview and let the camera warm up for 2 seconds
         camera.start_preview()
