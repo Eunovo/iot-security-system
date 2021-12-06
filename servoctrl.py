@@ -13,7 +13,7 @@ class ServoCtrl(Thread):
         self.save_path = "/home/pi/servo.dat"
         self.current_position = ''
         with open(self.save_path, 'r') as file:
-            self.current_position = file.readline()
+            self.current_position = file.read()
         print('Current Position: ', self.current_position)
 
     def run(self):
@@ -35,7 +35,6 @@ class ServoCtrl(Thread):
                 self.rotate({
                     'left': 0.1, 'right': 0.2
                 }.get(new_position))
-                print('Current Position: ', new_position)
                 self.set_current_position(new_position)
                 
                 # pause
@@ -58,6 +57,8 @@ class ServoCtrl(Thread):
         self.servo.value = 0
 
     def set_current_position(self, position):
+        self.current_position = position
+        print('Current Position: ', position)
         with open(self.save_path, 'w') as file:
-            file.write(position + '\r')
+            file.write(position)
             file.flush()
