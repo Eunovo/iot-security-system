@@ -104,7 +104,6 @@ def main():
                 'left': servoCtrl.left,
                 'right': servoCtrl.right
             }.get(direction)()
-            time.sleep(5)
 
         leftMic.when_activated = lambda: control_servo('left')
         rightMic.when_activated = lambda: control_servo('right')
