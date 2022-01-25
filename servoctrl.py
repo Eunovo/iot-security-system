@@ -53,7 +53,7 @@ class ServoCtrl(Thread):
     def rotate(self, cycle):
         # actual_cycle = 0.1 + (((cycle - (-1)) / (1 - (-1))) * (0.2 - 0.1))
         self.servo.value = cycle
-        time.sleep(0.3)
+        time.sleep(0.5)
         self.servo.value = 0
 
     def set_current_position(self, position):
